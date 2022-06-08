@@ -26,6 +26,8 @@ public class Main {
                 Matcher matcher = pattern.matcher(cmd[i]);
                 if (matcher.find() && (cmd.length != 1) && (cmd.length % 2 == 0)) {
                     commandsValid = true;
+                } else if (cmd[0].equals("-exit") || cmd[0].equals("-h")) {
+                    commandsValid = true;
                 } else commandsValid = false;
             }
             if (!commandsValid) {
@@ -42,7 +44,6 @@ public class Main {
             boolean exit = false;
 
             for (int i = 0; i < cmd.length; i++) {
-                boolean incorrectAttribute = false;
                 switch (cmd[i]) {
                     case "-h" -> help = getHelp();
                     case "-w" -> work = Integer.parseInt(cmd[++i]);
@@ -54,7 +55,7 @@ public class Main {
                         System.out.println("Выход");
                     }
                 }
-                if (incorrectAttribute) break;
+
             }
             if (exit) break;
             if (help == 0) {
@@ -63,7 +64,7 @@ public class Main {
                     timer(work, breake, sizeBreak, sizeWork);
                 }
                 long endTime = System.currentTimeMillis();
-                System.out.println("Pomodoro таймер истек: " + (endTime - startTime) / (1000 * 60) + " min");
+                System.out.println(ANSI_RED + "Pomodoro таймер истек: " + ANSI_GREEN + (endTime - startTime) / (1000 * 60) + ANSI_RED + " min" + ANSI_RESET);
             }
             test = false;
         } while (true);
@@ -96,6 +97,7 @@ public class Main {
 
     public static void timer(int work, int breake, int sizebreak, int sizework) throws InterruptedException {
 
+
         printProgress("Work Progress: ", work, sizework);
 
         printProgress("Break Progress: ", breake, sizebreak);
@@ -122,9 +124,13 @@ public class Main {
             percent = Math.round(percent);
             percent /= 10;
 
-            System.out.print(ANSI_CYAN + process + percent + "% " + ANSI_RESET + (" ").repeat(5 - (String.valueOf(percent).length()))
-                    + (ANSI_YELLOW + "[" + ANSI_RESET) + (ANSI_RED + "#" + ANSI_RESET).repeat(i) + (ANSI_GREEN + "#" + ANSI_RESET).repeat(rep - i)
-                    + ANSI_YELLOW + "]" + ANSI_RESET + ANSI_CYAN + "( " + x + "min / " + time + "min )" + ANSI_RESET + "\r");
+            System.out.print(new StringBuilder().append(ANSI_CYAN).append(process)
+                    .append(percent).append("% ").append(ANSI_RESET).append((" ")
+                            .repeat(5 - (String.valueOf(percent).length())))
+                    .append(ANSI_YELLOW + "[" + ANSI_RESET).append((ANSI_RED + "#" + ANSI_RESET).repeat(i))
+                    .append((ANSI_GREEN + "#" + ANSI_RESET).repeat(rep - i)).append(ANSI_YELLOW).append("]")
+                    .append(ANSI_RESET).append(ANSI_CYAN).append("( ").append(x).append("min / ").append(time)
+                    .append("min )").append(ANSI_RESET).append("\r"));
 
             if (!test) {
                 TimeUnit.SECONDS.sleep(length);
