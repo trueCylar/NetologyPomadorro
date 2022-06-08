@@ -21,15 +21,15 @@ public class Main {
             String[] cmd = new Scanner(System.in).nextLine().split(" ");
             boolean commandsValid = false;
             String validCommands = "-w|-b|-count|[0-9]{1,}|-h|-exit|-t";
-            for (String str : cmd) {
+            for (int i = 0; i < cmd.length; i++) {
                 Pattern pattern = Pattern.compile(validCommands);
-                Matcher matcher = pattern.matcher(str);
-                if (matcher.find()) {
+                Matcher matcher = pattern.matcher(cmd[i]);
+                if (matcher.find() && (cmd.length != 1) && (cmd.length % 2 == 0)) {
                     commandsValid = true;
                 } else commandsValid = false;
             }
             if (!commandsValid) {
-                System.out.println("Неверная комманда или синтаксис!");
+                System.out.println("Неверная комманда или синтаксис! Помощь: -h");
                 continue;
             }
 
@@ -42,6 +42,7 @@ public class Main {
             boolean exit = false;
 
             for (int i = 0; i < cmd.length; i++) {
+                boolean incorrectAttribute = false;
                 switch (cmd[i]) {
                     case "-h" -> help = getHelp();
                     case "-w" -> work = Integer.parseInt(cmd[++i]);
@@ -53,6 +54,7 @@ public class Main {
                         System.out.println("Выход");
                     }
                 }
+                if (incorrectAttribute) break;
             }
             if (exit) break;
             if (help == 0) {
@@ -119,9 +121,11 @@ public class Main {
             x /= 10;
             percent = Math.round(percent);
             percent /= 10;
+
             System.out.print(ANSI_CYAN + process + percent + "% " + ANSI_RESET + (" ").repeat(5 - (String.valueOf(percent).length()))
                     + (ANSI_YELLOW + "[" + ANSI_RESET) + (ANSI_RED + "#" + ANSI_RESET).repeat(i) + (ANSI_GREEN + "#" + ANSI_RESET).repeat(rep - i)
-                    + ANSI_YELLOW + "]" + ANSI_RESET + ANSI_CYAN + "( " + x + "min / " + time + "min )"+ ANSI_RESET + "\r" );
+                    + ANSI_YELLOW + "]" + ANSI_RESET + ANSI_CYAN + "( " + x + "min / " + time + "min )" + ANSI_RESET + "\r");
+
             if (!test) {
                 TimeUnit.SECONDS.sleep(length);
             }
