@@ -108,7 +108,7 @@ public class Main {
         int rep;
         length = 60 * time / size;
         rep = 60 * time / length;
-        int stretchb = size / (3 * time);
+        double stretchb = size / (3.0 * time);
         for (int i = 1; i <= rep; i++) {
             double x = i;
             x = 1.0 / 3.0 * x;
@@ -131,7 +131,8 @@ public class Main {
                     .append((ANSI_GREEN + "#" + ANSI_RESET).repeat(rep - i)).append(ANSI_YELLOW).append("]")
                     .append(ANSI_RESET).append(ANSI_CYAN).append("( ").append(x).append("min / ").append(time)
                     .append("min )").append(ANSI_RESET).append("\r"));
-
+//            System.out.print(process + percent+"% " + (" ").repeat(22 - (String.valueOf(percent).length()))
+//                    +"[" + ("#").repeat(i) + ("-").repeat(rep - i)+"]    ( " + x +"min / " + time +"min )"+  "\r");
             if (!test) {
                 TimeUnit.SECONDS.sleep(length);
             }
