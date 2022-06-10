@@ -68,7 +68,6 @@ public class Main {
             }
             test = false;
         } while (true);
-
     }
 
     private static void promptOutput() {
@@ -96,10 +95,7 @@ public class Main {
     }
 
     public static void timer(int work, int breake, int sizebreak, int sizework) throws InterruptedException {
-
-
         printProgress("Work Progress: ", work, sizework);
-
         printProgress("Break Progress: ", breake, sizebreak);
     }
 
@@ -131,8 +127,7 @@ public class Main {
                     .append((ANSI_GREEN + "#" + ANSI_RESET).repeat(rep - i)).append(ANSI_YELLOW).append("]")
                     .append(ANSI_RESET).append(ANSI_CYAN).append("( ").append(x).append("min / ").append(time)
                     .append("min )").append(ANSI_RESET).append("\r"));
-//            System.out.print(process + percent+"% " + (" ").repeat(22 - (String.valueOf(percent).length()))
-//                    +"[" + ("#").repeat(i) + ("-").repeat(rep - i)+"]    ( " + x +"min / " + time +"min )"+  "\r");
+
             if (!test) {
                 TimeUnit.SECONDS.sleep(length);
             }
